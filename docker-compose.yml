@@ -23,7 +23,6 @@ services:
       - JVM_CODE_CACHE_ARGS='-XX:InitialCodeCacheSize=1g -XX:ReservedCodeCacheSize=1g'
     volumes:
       - ./homes/jira-srv:/var/jira
-      - ./configs/server_conf/jira.xml:/opt/jira/conf/server.xml
     network_mode: host
     depends_on:
       - postgres-jira
@@ -38,7 +37,6 @@ services:
       - JVM_CODE_CACHE_ARGS='-XX:InitialCodeCacheSize=1g -XX:ReservedCodeCacheSize=8g'
     volumes:
       - ./homes/confluence-srv:/var/confluence
-      - ./configs/server_conf/confluence.xml:/opt/confluence/conf/server.xml
     network_mode: host
     depends_on:
       - postgres-confluence
