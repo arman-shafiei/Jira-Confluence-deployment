@@ -17,12 +17,14 @@ ENV CONFLUENCE_HOME=/var/confluence \
 ENV JAVA_OPTS="-javaagent:${AGENT_PATH}/${AGENT_FILENAME} ${JAVA_OPTS}"
 
 RUN mkdir -p ${CONFLUENCE_INSTALL} ${CONFLUENCE_HOME} ${AGENT_PATH}
-COPY atlassian-agent.jar ${AGENT_PATH}/${AGENT_FILENAME}
-COPY atlassian-confluence-${APP_VERSION}.tar.gz /tmp/atlassian.tar.gz
 
-RUN tar xzf /tmp/atlassian.tar.gz -C /opt/confluence/ --strip-components 1 \
-&& rm -f /tmp/atlassian.tar.gz \
-&& echo "confluence.home = ${CONFLUENCE_HOME}" > ${CONFLUENCE_INSTALL}/${ATLASSIAN_PRODUCTION}/WEB-INF/classes/confluence-init.properties
+RUN curl -o ${AGENT_PATH}/${AGENT_FILENAME}  https://github.com/haxqer/confluence/releases/download/v${AGENT_VERSION}/atlassian-agent.jar -L
+
+RUN curl -o /tmp/atlassian.tar.gz https://product-downloads.atlassian.com/software/confluence/downloads/atlassian-${APP_NAME}-${APP_VERSION}.tar.gz -L \
+&& tar xzf /tmp/atlassian.tar.gz -C /opt/confluence/ --strip-components 1 \
+&& rm -f /tmp/atlassian.tar.gz
+
+RUN echo "confluence.home = ${CONFLUENCE_HOME}" > ${CONFLUENCE_INSTALL}/${ATLASSIAN_PRODUCTION}/WEB-INF/classes/confluence-init.properties
 
 WORKDIR $CONFLUENCE_INSTALL
 

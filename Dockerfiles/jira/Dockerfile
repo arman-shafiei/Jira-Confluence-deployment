@@ -17,12 +17,14 @@ ENV JIRA_USER=jira \
 ENV JAVA_OPTS="-javaagent:${AGENT_PATH}/${AGENT_FILENAME} ${JAVA_OPTS}"
 
 RUN mkdir -p ${JIRA_INSTALL} ${JIRA_HOME} ${AGENT_PATH}
-COPY atlassian-agent.jar ${AGENT_PATH}/${AGENT_FILENAME}
-COPY atlassian-jira-software-${JIRA_VERSION}.tar.gz /tmp/atlassian.tar.gz
 
-RUN tar xzf /tmp/atlassian.tar.gz -C ${JIRA_INSTALL}/ --strip-components 1 \
-&& rm -f /tmp/atlassian.tar.gz \
-&& echo "jira.home = ${JIRA_HOME}" > ${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties
+RUN curl -o ${AGENT_PATH}/${AGENT_FILENAME}  https://github.com/haxqer/jira/releases/download/v${AGENT_VERSION}/atlassian-agent.jar -L
+
+RUN curl -o /tmp/atlassian.tar.gz https://product-downloads.atlassian.com/software/jira/downloads/atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}.tar.gz -L \
+&& tar xzf /tmp/atlassian.tar.gz -C ${JIRA_INSTALL}/ --strip-components 1 \
+&& rm -f /tmp/atlassian.tar.gz
+
+RUN echo "jira.home = ${JIRA_HOME}" > ${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties
 
 RUN export CONTAINER_USER=$JIRA_USER \
 && export CONTAINER_GROUP=$JIRA_GROUP \
