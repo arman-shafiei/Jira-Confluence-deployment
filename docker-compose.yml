@@ -46,9 +46,9 @@ services:
     image: postgres:11-alpine
     environment:
        TZ: 'Asia/Tehran'
-       POSTGRES_PASSWORD: ${DB_PASSWORD}
-       POSTGRES_USER: jira
-       POSTGRES_DB: jira
+       POSTGRES_PASSWORD: ${JIRA_DB_PASSWORD}
+       POSTGRES_USER: ${JIRA_DB_USERNAME}
+       POSTGRES_DB: ${JIRA_DB_NAME}
     volumes:
        - ./databases/jira:/var/lib/postgresql/data
     network_mode: host
@@ -58,9 +58,9 @@ services:
     image: postgres:11-alpine
     environment:
        TZ: 'Asia/Tehran'
-       POSTGRES_PASSWORD: ${DB_PASSWORD}
-       POSTGRES_USER: confluence
-       POSTGRES_DB: confluence
+       POSTGRES_PASSWORD: ${CONFLUENCE_DB_PASSWORD}
+       POSTGRES_USER: ${CONFLUENCE_DB_USERNAME}
+       POSTGRES_DB: ${CONFLUENCE_DB_NAME}
     volumes:
        - ./databases/confluence:/var/lib/postgresql/data
     network_mode: host
