@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.7'
 services:
 
   nginx:
@@ -19,7 +19,7 @@ services:
     environment:
       - TZ='Asia/Tehran'
       - JVM_MINIMUM_MEMORY=1g
-      - JVM_MAXIMUM_MEMORY=3g
+      - JVM_MAXIMUM_MEMORY=4g
       - JVM_CODE_CACHE_ARGS='-XX:InitialCodeCacheSize=1g -XX:ReservedCodeCacheSize=1g'
     volumes:
       - ./homes/jira-srv:/var/jira
@@ -33,7 +33,7 @@ services:
     environment:
       - TZ='Asia/Tehran'
       - JVM_MINIMUM_MEMORY=1g
-      - JVM_MAXIMUM_MEMORY=3g
+      - JVM_MAXIMUM_MEMORY=4g
       - JVM_CODE_CACHE_ARGS='-XX:InitialCodeCacheSize=1g -XX:ReservedCodeCacheSize=8g'
     volumes:
       - ./homes/confluence-srv:/var/confluence
