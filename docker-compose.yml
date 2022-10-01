@@ -4,39 +4,43 @@ services:
   nginx:
     image: nginx:stable-alpine
     volumes:
-      - ./configs/nginx/conf.d:/etc/nginx/conf.d
-      - ./configs/nginx/ssl.conf:/etc/nginx/default.d/ssl.conf
-      - ./configs/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./configs/nginx/certificates:/etc/nginx/certificates
-      - ./configs/nginx/dhparam.pem:/etc/nginx/dhparam.pem
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl.conf:/etc/nginx/default.d/ssl.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/certificates:/etc/nginx/certificates
+      - ./nginx/dhparam.pem:/etc/nginx/dhparam.pem
     network_mode: host
     environment:
       - TZ='Asia/Tehran'
     restart: unless-stopped
 
   jira:
-    image: jira:8.21.0
+    build:
+      context: ./Dockerfile/jira
     environment:
       - TZ='Asia/Tehran'
       - JVM_MINIMUM_MEMORY=1g
       - JVM_MAXIMUM_MEMORY=4g
       - JVM_CODE_CACHE_ARGS='-XX:InitialCodeCacheSize=1g -XX:ReservedCodeCacheSize=1g'
     volumes:
-      - ./homes/jira-srv:/var/jira
+      - ./home/jira-srv:/var/jira
+      - ./server_config/jira.xml:/opt/jira/conf/server.xml
     network_mode: host
     depends_on:
       - postgres-jira
     restart: always
 
   confluence:
-    image: confluence:7.15.0
+    build:
+      context: Dockerfile/confluence
     environment:
       - TZ='Asia/Tehran'
       - JVM_MINIMUM_MEMORY=1g
       - JVM_MAXIMUM_MEMORY=4g
       - JVM_CODE_CACHE_ARGS='-XX:InitialCodeCacheSize=1g -XX:ReservedCodeCacheSize=8g'
     volumes:
-      - ./homes/confluence-srv:/var/confluence
+      - ./home/confluence-srv:/var/confluence
+      - ./server_config/confluence.xml:/opt/confluence/conf/server.xml
     network_mode: host
     depends_on:
       - postgres-confluence
