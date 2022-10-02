@@ -20,3 +20,10 @@ This deployment has been done and tested with:
 - JDK 11
 - Jira 8.21.0
 - Confluence 7.15.0
+
+## Deployment
+
+Simply run:
+```bash
+docker-compose up -d
+```
