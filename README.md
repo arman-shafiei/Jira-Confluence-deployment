@@ -1,5 +1,9 @@
 # Jira-Confluence-deployment
 
+<p align="center" style="margin-bottom: 0px !important;">
+  <img width="500" src="https://raw.githubusercontent.com/arman-shafiei/page/main/Logos/jira_confluence_docker.png" alt="Jira & Confluence & Docker Logo" align="center">
+</p>
+
 A docker compose template which you can use to deploy Jira and Confluence.
 
 Via this deployment you can deploy Jira+Confluence with postgres database and nginx as a webserver.
